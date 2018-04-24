@@ -1,0 +1,294 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Line Chart</title>
+	<script src="node_modules/chart.js/dist/Chart.bundle.js"></script>
+	<script src="utils.js"></script>
+	<style>
+		.grid-container {
+			display: grid;
+			grid-template-columns: auto auto;
+			padding: 10px;
+			}
+			.grid-item {
+			background-color: rgba(255, 255, 255, 0.8);
+			padding: 20px;
+			font-size: 30px;
+			text-align: center;
+			}
+		canvas{
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="grid-container">
+		<div class="grid-item"><canvas id="canvas"></canvas></div>
+		<div class="grid-item"><canvas id="canvas2"></canvas></div>
+		<div class="grid-item"><canvas id="canvas3"></canvas></div>  
+		<div class="grid-item"><canvas id="canvas4"></canvas></div>
+		<div class="grid-item"><canvas id="canvas5"></canvas></div>
+		<div class="grid-item"><canvas id="canvas6"></canvas></div>  
+		<div class="grid-item"><canvas id="canvas7"></canvas></div> 
+	</div>
+
+	<br>
+	<br>
+	<button id="randomizeData">Randomize Data</button>
+	<button id="addDataset">Add Dataset</button>
+	<button id="removeDataset">Remove Dataset</button>
+	<button id="addData">Add Data</button>
+	<button id="removeData">Remove Data</button>
+	<script>
+		// There are 4 special global settings that can change all of the fonts on the chart.
+		// Default font color for all text.
+		Chart.defaults.global.defaultFontColor = 'red';
+		// Default font family for all text.
+		Chart.defaults.global.defaultFontFamily = "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif";
+		// Default font size (in px) for text. Does not apply to radialLinear scale point labels.
+		Chart.defaults.global.defaultFontSize = 12;
+		// Default font style. Does not apply to tooltip title or footer. Does not apply to chart title.
+		Chart.defaults.global.defaultFontColor = 'black';
+		// Hover mode.
+		Chart.defaults.global.hover.mode = 'nearest';
+
+		// Point Configuration
+		Chart.defaults.global.elements.point.radius = 3;
+		Chart.defaults.global.elements.point.pointStyle = 'circle';
+		Chart.defaults.global.elements.point.backgroundColor = 'rgba(0,0,0,0.1)';
+		Chart.defaults.global.elements.point.hitRadius = 5;
+		Chart.defaults.global.elements.point.hoverRadius = 4;
+		
+		// Line Configuration
+		Chart.defaults.global.elements.line.tension = 0.4;
+		
+		// Rectangle Configuration
+		Chart.defaults.global.elements.rectangle.borderWidth = 0;
+		
+		// Arc Configuration
+		Chart.defaults.global.elements.arc.borderWidth = 2;
+
+		var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+		var config = {
+			type: 'line',
+			data: {
+				labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+				datasets: [{
+					label: 'My First dataset',
+					backgroundColor: window.chartColors.red,
+					borderColor: window.chartColors.red,
+					data: [
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor()
+					],
+					fill: false,
+				}, {
+					label: 'My Second dataset',
+					fill: false,
+					backgroundColor: window.chartColors.blue,
+					borderColor: window.chartColors.blue,
+					data: [
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor()
+					],
+				}]
+			},
+			options: {
+				// Resizes the chart canvas when its container does.
+				responsive: true,
+				//Duration in milliseconds it takes to animate to new size after a resize event.
+				responsiveAnimationDuration: 0,
+				// Maintain the original canvas aspect ratio (width / height) when resizing.
+				maintainAspectRatio: true,
+				// Called when a resize occurs. Gets passed two arguments: the chart instance and the new size.
+				onResize: null,
+				title: {
+					// Sets which elements appear in the tooltip. See Interaction Modes for details.
+					display: true,
+					// The mode for positioning the title. 
+					position: 'top',
+					fontSize: 12,
+					text: 'Chart.js Demo',
+					// ...
+				},
+				tooltips: {
+					// Sets which elements appear in the tooltip. See Interaction Modes for details.
+					mode: 'nearest',
+					// if true, the hover mode only applies when the mouse position intersects an item on the chart.
+					intersect: true,
+					// Can be set to 'x', 'y', or 'xy' to define which directions are used in calculating distances. 
+					// Defaults to 'x' for index mode and 'xy' in dataset and nearest modes.
+					axis: 'x',
+					// Duration in milliseconds it takes to animate hover style changes.
+					animationDuration: 400,
+					// Are on-canvas tooltips enabled
+					enabled: true,
+					// The mode for positioning the tooltip. 
+					position: 'average',
+					// Background color of the tooltip.
+					backgroundColor: 'rgba(0,0,0,0.8)',
+					titleFontSize: 12,
+					bodyFontSize: 12,
+					footerFontSize: 12,
+					// ...
+				},
+				scales: {
+					xAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Month',
+							fontColor: 'grey'
+						}
+					}],
+					yAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Value',
+							fontColor: 'grey'
+						}
+					}]
+				},
+				legend: {
+					labels: {
+						// Legend label configuration
+						fontColor: 'blue',
+						boxWidth: 40,
+						fontSize: 12,
+						fontStyle: 'normal',
+						// ...
+					},
+					display: true,
+					position: 'top',
+					fullWidth: true,
+					// ...
+				},
+				layout: {
+					// Layout configuration
+					padding: {
+						left: 50,
+						right: 0,
+						top: 0,
+						bottom: 0
+					}
+					// ...
+				},
+			}
+		};
+
+		window.onload = function() {
+			var ctx = document.getElementById('canvas').getContext('2d');
+			var ctx2 = document.getElementById('canvas2').getContext('2d');
+			var ctx3 = document.getElementById('canvas3').getContext('2d');
+			var ctx4 = document.getElementById('canvas4').getContext('2d');
+			var ctx5 = document.getElementById('canvas5').getContext('2d');
+			var ctx6 = document.getElementById('canvas6').getContext('2d');
+			var ctx7 = document.getElementById('canvas7').getContext('2d');
+
+			configLine = JSON.parse(JSON.stringify(config));
+			configLine.type = 'line';
+			window.lineChart = new Chart(ctx, configLine);
+
+			configBar = JSON.parse(JSON.stringify(config));
+			configBar.type = 'bar';
+			window.barChart = new Chart(ctx2, configBar);
+
+			configRadar = JSON.parse(JSON.stringify(config));
+			configRadar.type = 'radar';
+			window.barChart = new Chart(ctx3, configRadar);
+			
+			configPie = JSON.parse(JSON.stringify(config));
+			configPie.type = 'pie';
+			window.barChart = new Chart(ctx4, configPie);
+
+			configPolar = JSON.parse(JSON.stringify(config));
+			configPolar.type = 'polarArea';
+			window.barChart = new Chart(ctx5, configPolar);
+			
+			configBubble = JSON.parse(JSON.stringify(config));
+			configBubble.type = 'bubble';
+			window.barChart = new Chart(ctx6, configBubble);
+
+			configMixed = JSON.parse(JSON.stringify(config));
+			configMixed.type = 'bar';
+			configMixed.data.datasets[1].type = 'line';
+			window.barChart = new Chart(ctx7, configMixed);
+		};
+
+		document.getElementById('randomizeData').addEventListener('click', function() {
+			config.data.datasets.forEach(function(dataset) {
+				dataset.data = dataset.data.map(function() {
+					return randomScalingFactor();
+				});
+
+			});
+
+			window.lineChart.update();
+		});
+
+		var colorNames = Object.keys(window.chartColors);
+		document.getElementById('addDataset').addEventListener('click', function() {
+			var colorName = colorNames[config.data.datasets.length % colorNames.length];
+			var newColor = window.chartColors[colorName];
+			var newDataset = {
+				label: 'Dataset ' + config.data.datasets.length,
+				backgroundColor: newColor,
+				borderColor: newColor,
+				data: [],
+				fill: false
+			};
+
+			for (var index = 0; index < config.data.labels.length; ++index) {
+				newDataset.data.push(randomScalingFactor());
+			}
+
+			config.data.datasets.push(newDataset);
+			window.lineChart.update();
+		});
+
+		document.getElementById('addData').addEventListener('click', function() {
+			if (config.data.datasets.length > 0) {
+				var month = MONTHS[config.data.labels.length % MONTHS.length];
+				config.data.labels.push(month);
+
+				config.data.datasets.forEach(function(dataset) {
+					dataset.data.push(randomScalingFactor());
+				});
+
+				window.lineChart.update();
+			}
+		});
+
+		document.getElementById('removeDataset').addEventListener('click', function() {
+			config.data.datasets.splice(0, 1);
+			window.lineChart.update();
+		});
+
+		document.getElementById('removeData').addEventListener('click', function() {
+			config.data.labels.splice(-1, 1); // remove the label first
+
+			config.data.datasets.forEach(function(dataset) {
+				dataset.data.pop();
+			});
+
+			window.lineChart.update();
+		});
+	</script>
+</body>
+
+</html>
