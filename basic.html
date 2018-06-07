@@ -3,37 +3,40 @@
 
 <head>
 	<title>Line Chart</title>
-	<script src="node_modules/chart.js/dist/Chart.bundle.js"></script>
-	<script src="utils.js"></script>
+
+</head>
+
+<body>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+    <script src="utils.js"></script>
+
 	<style>
 		.grid-container {
 			display: grid;
 			grid-template-columns: auto auto;
 			padding: 10px;
-			}
-			.grid-item {
+		}
+		.grid-item {
 			background-color: rgba(255, 255, 255, 0.8);
 			padding: 20px;
 			font-size: 30px;
 			text-align: center;
-			}
+		}
 		canvas{
 			-moz-user-select: none;
 			-webkit-user-select: none;
 			-ms-user-select: none;
 		}
 	</style>
-</head>
-
-<body>
 	<div class="grid-container">
 		<div class="grid-item"><canvas id="canvas"></canvas></div>
 		<div class="grid-item"><canvas id="canvas2"></canvas></div>
-		<div class="grid-item"><canvas id="canvas3"></canvas></div>  
+		<div class="grid-item"><canvas id="canvas3"></canvas></div>
 		<div class="grid-item"><canvas id="canvas4"></canvas></div>
 		<div class="grid-item"><canvas id="canvas5"></canvas></div>
-		<div class="grid-item"><canvas id="canvas6"></canvas></div>  
-		<div class="grid-item"><canvas id="canvas7"></canvas></div> 
+		<div class="grid-item"><canvas id="canvas6"></canvas></div>
+		<div class="grid-item"><canvas id="canvas7"></canvas></div>
 	</div>
 
 	<br>
@@ -62,13 +65,13 @@
 		Chart.defaults.global.elements.point.backgroundColor = 'rgba(0,0,0,0.1)';
 		Chart.defaults.global.elements.point.hitRadius = 5;
 		Chart.defaults.global.elements.point.hoverRadius = 4;
-		
+
 		// Line Configuration
 		Chart.defaults.global.elements.line.tension = 0.4;
-		
+
 		// Rectangle Configuration
 		Chart.defaults.global.elements.rectangle.borderWidth = 0;
-		
+
 		// Arc Configuration
 		Chart.defaults.global.elements.arc.borderWidth = 2;
 
@@ -119,7 +122,7 @@
 				title: {
 					// Sets which elements appear in the tooltip. See Interaction Modes for details.
 					display: true,
-					// The mode for positioning the title. 
+					// The mode for positioning the title.
 					position: 'top',
 					fontSize: 12,
 					text: 'Chart.js Demo',
@@ -130,14 +133,14 @@
 					mode: 'nearest',
 					// if true, the hover mode only applies when the mouse position intersects an item on the chart.
 					intersect: true,
-					// Can be set to 'x', 'y', or 'xy' to define which directions are used in calculating distances. 
+					// Can be set to 'x', 'y', or 'xy' to define which directions are used in calculating distances.
 					// Defaults to 'x' for index mode and 'xy' in dataset and nearest modes.
 					axis: 'x',
 					// Duration in milliseconds it takes to animate hover style changes.
 					animationDuration: 400,
 					// Are on-canvas tooltips enabled
 					enabled: true,
-					// The mode for positioning the tooltip. 
+					// The mode for positioning the tooltip.
 					position: 'average',
 					// Background color of the tooltip.
 					backgroundColor: 'rgba(0,0,0,0.8)',
@@ -211,7 +214,7 @@
 			configRadar = JSON.parse(JSON.stringify(config));
 			configRadar.type = 'radar';
 			window.barChart = new Chart(ctx3, configRadar);
-			
+
 			configPie = JSON.parse(JSON.stringify(config));
 			configPie.type = 'pie';
 			window.barChart = new Chart(ctx4, configPie);
@@ -219,7 +222,7 @@
 			configPolar = JSON.parse(JSON.stringify(config));
 			configPolar.type = 'polarArea';
 			window.barChart = new Chart(ctx5, configPolar);
-			
+
 			configBubble = JSON.parse(JSON.stringify(config));
 			configBubble.type = 'bubble';
 			window.barChart = new Chart(ctx6, configBubble);

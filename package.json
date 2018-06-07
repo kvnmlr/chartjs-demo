@@ -1,0 +1,23 @@
+{
+  "name": "chartjs-demo",
+  "version": "1.0.0",
+  "description": "<p><a href=\"https://npmjs.com/package/chart.js\" target=\"_blank\"><img src=\"https://img.shields.io/npm/v/chart.js.svg?style=flat-square&amp;maxAge=600\" alt=\"npm\"></a>\r <a href=\"https://npmjs.com/package/chart.js\" target=\"_blank\"><img src=\"https://img.shields.io/npm/dm/chart.js.svg?style=flat-square&amp;maxAge=600\" alt=\"npm\"></a></p>\r <pre><code class=\"lang-bash\">npm install chart.js --save\r </code></pre>",
+  "main": "utils.js",
+  "dependencies": {
+    "chart.js": "^2.7.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kvnmlr/chartjs-demo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kvnmlr/chartjs-demo/issues"
+  },
+  "homepage": "https://github.com/kvnmlr/chartjs-demo#readme"
+}
